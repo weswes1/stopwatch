@@ -1,0 +1,143 @@
+<div id="Alarm">
+  <div class="Bead" id="bead1"></div>
+  <div class="Bead" id="bead2"></div>
+  <div id="timeBoard">
+    <p id="text"></p>
+    <button type="button" id="stopbutton">Stop</button>
+    <button type="button" id="startbutton"> Start</button>
+    </button>
+    <button type="button" id="resetbutton">
+  Reset</button>
+  </div>
+</div>
+
+
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
+#Alarm {
+  height: 400px;
+  width: 400px;
+  background-color: #b58;
+  border-radius: 50%;
+  margin: auto;
+  border: 3px solid purple;
+}
+
+.Bead {
+  background-color: #b58;
+  border-radius: 50%;
+  border: 3px solid purple;
+}
+#bead1 {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 500px;
+  top: 370px;
+}
+
+#bead2 {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  left: 500px;
+  top: 370px;
+}
+
+#timeBoard {
+  font-family: "VT323";
+  position: relative;
+  margin: auto;
+  top: 70px;
+  background-color: #000;
+  height: 80px;
+  width: 200px;
+  border-radius: 10px;
+  border: 3px solid purple;
+}
+
+#stopbutton {
+  font-size: 15px;
+  font-family: "VT323";
+  background-color: #0f0;
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  bottom: 0;
+  border-radius: 10px;
+}
+
+#startbutton {
+  position: absolute;
+  font-size: 15px;
+  font-family: "VT323";
+  background-color: #0f0;
+  height: 30px;
+  width: 50px;
+  right: 75px;
+  bottom: 0;
+  border-radius: 10px;
+}
+
+#resetbutton {
+  font-size: 15px;
+  font-family: "VT323";
+  background-color: #0f0;
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  bottom: 0;
+  right: 0;
+  border-radius: 10px;
+}
+
+#text {
+  position: relative;
+  color: yellow;
+  font-size: 30px;
+  text-align: center;
+  bottom: 20px;
+}
+
+body {
+  background-color: black;
+}
+
+
+window.onload = function() {
+  var controll = true;
+  var then;
+  document.getElementById("text").innerHTML = "00:00:00";
+  document.getElementById("resetbutton").addEventListener("click", function() {
+    document.getElementById("text").innerHTML = "00:00:00";
+    controll = false;
+  });
+
+  document.getElementById("stopbutton").addEventListener("click", function() {
+    controll = false;
+    var finalTime = [
+      Math.floor(timeElapsed / (60 * 60)) % 24,
+      Math.floor(timeElapsed / 60) % 60,
+      timeElapsed % 60
+    ].join(":");
+    document.getElementById("text").innerHTML = finalTime;
+  });
+
+  document.getElementById("startbutton").addEventListener("click", function() {
+    then = Math.floor(new Date().getTime() / 1000);
+    controll = true;
+    var myVar = setInterval(myTimer, 1000);
+  });
+
+  function myTimer() {
+    console.log(then);
+    if (controll === true) {
+      var timeElapsed = Math.floor(new Date().getTime() / 1000) - then;
+      document.getElementById("text").innerHTML = [
+        Math.floor(timeElapsed / (60 * 60)) % 24,
+        Math.floor(timeElapsed / 60) % 60,
+        timeElapsed % 60
+      ].join(":");
+    }
+  }
+};
